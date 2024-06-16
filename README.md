@@ -1,6 +1,6 @@
 # ARES: Alternating Reinforcement Learning and Supervised Fine-Tuning for Enhanced Multi-Modal Chain-of-Thought Reasoning\\Through Diverse AI Feedback
 
-<img src="https://github.com/Amyyyyeah/EMNLP24_ARES/blob/main/ares.jpg" width="850px" height="430px" title="Overview of ARES" alt="server2"></img><br/>
+<img src="https://github.com/Amyyyyeah/EMNLP24_ARES/blob/main/ares.jpg" width="850px" height="500px" title="Overview of ARES" alt="server2"></img><br/>
 
 ## Requirements
 
