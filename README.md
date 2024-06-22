@@ -71,7 +71,7 @@ If using the AOKVQA dataset, change the following paths to the AOKVQA dataset an
 ### [Step 1] RL training (4 NVIDIA A100 GPUs with 80GB memory) - RL.sh
 
 ```
-# Base - RL training 
+# Base - RL training
 accelerate launch run_mm_cot_rl.py \
     --data_root scienceqa_data/ScienceQA/data \
     --caption_file scienceqa_data/instruct_captions.json \
@@ -90,11 +90,11 @@ accelerate launch run_mm_cot_rl.py \
     --init_kl_coef 0.0001 --top_k 50 \
     --rl_epochs 10 --lr 2e-5 --clip_range 0.2 --epochs 1 --ga_step 8 --gamma 1.0 --adv_normalization True
 
-If there is a message 'Rationale Finished. Waiting for the feedback', Sentence-level nuanced feedback is needed.
+**If there is a message 'Rationale Finished. Waiting for the feedback', Sentence-level nuanced feedback is needed.
 First, copy RL_models/{current_model_path}/questions/* to the ./preprocessing_after_RL path.
 So, run ./preprocessing_after_RL/processing_sentence_level_feedback.sh for preprocessing to get the feedback, 
 and get the sentence-level nuanced feedback by running ./haiku.py.
-After finishing getting feedback, copy the questions folder back to RL_models/{current_model_path}. Then, create a file named llm_done.txt in the path RL_models/{current_model_path}/questions/0/, RL_models/{current_model_path}/questions/1/, RL_models/{current_model_path}/questions/2/, and RL_models/{current_model_path}/questions/3/ (use the command touch RL_models/{current_model_path}/questions/{0,1,2,3}/llm_done.txt).
+After finishing getting feedback, copy the questions folder back to RL_models/{current_model_path}. Then, create a file named llm_done.txt in the path RL_models/{current_model_path}/questions/0/, RL_models/{current_model_path}/questions/1/, RL_models/{current_model_path}/questions/2/, and RL_models/{current_model_path}/questions/3/ (use the command touch RL_models/{current_model_path}/questions/{0,1,2,3}/llm_done.txt).**
 
 # Base - Generate predictions_ans_*.json (Use 1 NVIDIA A100 GPU)
 CUDA_VISIBLE_DEVICES=0 python main.py \
@@ -107,8 +107,9 @@ CUDA_VISIBLE_DEVICES=0 python main.py \
     --output_dir experiments \
     --seed 42 \
     --evaluate_dir ./RL_models/base_neutral0.5_k4_rlb8_cl0.2_rle10_lr2e-05_vlr1.0_g1.0_l0.95_fGPT4V_seed42_kl0.0001_ga8_dosampleTrue_advTrue_tk50_ref/0
+```
 
-
+```
 # Large - RL training
 accelerate launch run_mm_cot_rl.py \
     --data_root scienceqa_data/ScienceQA/data \
@@ -139,7 +140,6 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py \
     --output_dir experiments \
     --seed 42 \
     --evaluate_dir ./RL_models/large_neutral0.5_k4_rlb2_cl0.2_rle5_lr2e-05_vlr1.0_g1.0_l0.95_fGPT4V_seed42_kl0.0001_ga16_dosampleTrue_advFalse_tk50_ref/0
-    
 ```
 
 ### [Step 2] SFT
