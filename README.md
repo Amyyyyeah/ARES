@@ -68,7 +68,7 @@ python extract_caption.py
 Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use our trained models, please put the them under the ```models``` folder.
 (If using the AOKVQA dataset, change the following paths to the AOKVQA dataset path in the code and bash arguments.)
 
-### [Step 1] RL training (4 NVIDIA A100 GPUs with 80GB memory) - RL.sh
+### [Step 1] RL training (4 NVIDIA A100 GPUs with 80GB memory)
 
 ```
 # Base - RL training
