@@ -149,17 +149,18 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py \
 ### [Step 2] SFT
 * Before the Supervised Fine Tuning step, correction feedback is needed. To obtain this feedback, you need an API key for Claude 3.
 
-* Run the following command using Python:
+* [1] Run the following command using Python:
 ```
 python ./preprocessing_after_RL/remove_sentence.py --file_path ./RL_models/{current_model}/{action}/prediction_ans_train.json --tokenizer ./RL_models/{current_model}/{action}
 ```
 
-* Run ./preprocessing_for_correction_feedback.py for the preprocessing.
-* Finally, run ./haiku_for_correction_feedback.py to get the correction feedback.
+* [2] Run ./preprocessing_for_correction_feedback.py for the preprocessing.
+* [3] Run ./haiku_for_correction_feedback.py to get the correction feedback.
 
 Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use our trained models, please put the them under the ```models``` folder.
 (If using the AOKVQA dataset, change the following paths to the AOKVQA dataset path in the code and bash arguments.)
 
+**After finishing getting feedback, enter the correction file path in the --correction_file.**
 ```
 CUDA_VISIBLE_DEVICES=0 python main.py \
     --data_root data/ScienceQA/data \
