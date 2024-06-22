@@ -95,7 +95,7 @@ accelerate launch run_mm_cot_rl.py \
     - First, copy RL_models/{current_model_path}/questions/* to the ./preprocessing_after_RL path.
     - So, run ./preprocessing_after_RL/processing_sentence_level_feedback.sh for preprocessing to get the feedback, and get the sentence-level nuanced feedback by running ./haiku.py.
     - After finishing getting feedback, copy the questions folder back to RL_models/{current_model_path}.
-    - Then, create a file named llm_done.txt in the path RL_models/{current_model_path}/questions/0/, RL_models/{current_model_path}/questions/1/, RL_models/{current_model_path}/questions/2/, and RL_models/{current_model_path}/questions/3/
+    - Then, create a file named llm_done.txt in the path RL_models/{current_model_path}/questions/0/, RL_models/{current_model_path}/questions/1/, RL_models/{current_model_path}/questions/2/, and RL_models/{current_model_path}/questions/3/.
 
       (use the command touch RL_models/{current_model_path}/questions/{0,1,2,3}/llm_done.txt).
       
@@ -112,7 +112,7 @@ CUDA_VISIBLE_DEVICES=0 python main.py \
     --seed 42 \
     --evaluate_dir ./RL_models/base_neutral0.5_k4_rlb8_cl0.2_rle10_lr2e-05_vlr1.0_g1.0_l0.95_fGPT4V_seed42_kl0.0001_ga8_dosampleTrue_advTrue_tk50_ref/0
 ```
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ```
 # Large - RL training
 accelerate launch run_mm_cot_rl.py \
