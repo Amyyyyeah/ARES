@@ -90,11 +90,12 @@ accelerate launch run_mm_cot_rl.py \
     --init_kl_coef 0.0001 --top_k 50 \
     --rl_epochs 10 --lr 2e-5 --clip_range 0.2 --epochs 1 --ga_step 8 --gamma 1.0 --adv_normalization True
 ```
-**If there is a message 'Rationale Finished. Waiting for the feedback', Sentence-level nuanced feedback is needed.
+
+** If there is a message 'Rationale Finished. Waiting for the feedback', Sentence-level nuanced feedback is needed.
 First, copy RL_models/{current_model_path}/questions/* to the ./preprocessing_after_RL path.
 So, run ./preprocessing_after_RL/processing_sentence_level_feedback.sh for preprocessing to get the feedback, 
 and get the sentence-level nuanced feedback by running ./haiku.py.
-After finishing getting feedback, copy the questions folder back to RL_models/{current_model_path}. Then, create a file named llm_done.txt in the path RL_models/{current_model_path}/questions/0/, RL_models/{current_model_path}/questions/1/, RL_models/{current_model_path}/questions/2/, and RL_models/{current_model_path}/questions/3/ (use the command touch RL_models/{current_model_path}/questions/{0,1,2,3}/llm_done.txt).**
+After finishing getting feedback, copy the questions folder back to RL_models/{current_model_path}. Then, create a file named llm_done.txt in the path RL_models/{current_model_path}/questions/0/, RL_models/{current_model_path}/questions/1/, RL_models/{current_model_path}/questions/2/, and RL_models/{current_model_path}/questions/3/ (use the command touch RL_models/{current_model_path}/questions/{0,1,2,3}/llm_done.txt). **
 
 ```
 # Base - Generate predictions_ans_*.json (Use 1 NVIDIA A100 GPU)
