@@ -153,14 +153,9 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py \
 ```
 python ./preprocessing_after_RL/remove_sentence.py --file_path ./RL_models/{current_model}/{action}/prediction_ans_train.json --tokenizer ./RL_models/{current_model}/{action}
 ```
-* Run the preprocessing script:
-```
-./preprocessing_for_correction_feedback.py
-```
-* Finally, run the script to get the correction feedback:
-```
-haiku_for_correction_feedback.py
-```
+* Run ./preprocessing_for_correction_feedback.py for the preprocessing.
+* Finally, run haiku_for_correction_feedback.py to get the correction feedback.
+
 Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use our trained models, please put the them under the ```models``` folder.
 (If using the AOKVQA dataset, change the following paths to the AOKVQA dataset path in the code and bash arguments.)
 
@@ -191,8 +186,8 @@ CUDA_VISIBLE_DEVICES=0 python run_mm_cot_lora.py \
     --test_le {correction_trained_model_path under experiments}/predictions_ans_test.json \
     --lora_r 64 --lora_alpha 128 --lora_dropout 0.05 \
 ```
-See the results in {correction_trained_model_path under experiments}/{lora_trained_path}/prediction_ans_test.json.
-
+* See the results in {correction_trained_model_path under experiments}/{lora_trained_path}/prediction_ans_test.json.
+  
 ## Citing ARES
 
 ```
