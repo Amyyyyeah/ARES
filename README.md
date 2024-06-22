@@ -96,6 +96,7 @@ accelerate launch run_mm_cot_rl.py \
     - So, run ./preprocessing_after_RL/processing_sentence_level_feedback.sh for preprocessing to get the feedback, and get the sentence-level nuanced feedback by running ./haiku.py.
     - After finishing getting feedback, copy the questions folder back to RL_models/{current_model_path}.
     - Then, create a file named llm_done.txt in the path RL_models/{current_model_path}/questions/0/, RL_models/{current_model_path}/questions/1/, RL_models/{current_model_path}/questions/2/, and RL_models/{current_model_path}/questions/3/
+
       (use the command touch RL_models/{current_model_path}/questions/{0,1,2,3}/llm_done.txt).
       
 ```
