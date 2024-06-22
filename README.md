@@ -202,6 +202,6 @@ This project is licensed under the MIT License.
 
 ## Acknowledgement
 
-Some parts of our code are adapted from [ScienceQA](https://github.com/lupantech/ScienceQA), [Transformers](https://github.com/huggingface/transformers), [pytorch-image-models](https://github.com/huggingface/pytorch-image-models) [MM-CoT](https://github.com/amazon-science/mm-cot/tree/main).
+Some parts of our code are adapted from [ScienceQA](https://github.com/lupantech/ScienceQA), [Transformers](https://github.com/huggingface/transformers), [pytorch-image-models](https://github.com/huggingface/pytorch-image-models).
 
 Additionally, we have referenced the code from [MM-CoT](https://github.com/amazon-science/mm-cot/tree/main).
