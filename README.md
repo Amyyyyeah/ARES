@@ -65,8 +65,8 @@ python extract_caption.py
 
 ## Instructions 
 
-If using the AOKVQA dataset, change the following paths to the AOKVQA dataset and also change the vision features to AOKVQA.
-
+Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use our trained models, please put the them under the ```models``` folder.
+(If using the AOKVQA dataset, change the following paths to the AOKVQA dataset path in the code and bash arguments.)
 
 ### [Step 1] RL training (4 NVIDIA A100 GPUs with 80GB memory) - RL.sh
 
@@ -157,8 +157,6 @@ python ./preprocessing_after_RL/remove_sentence.py --file_path ./RL_models/{curr
 * [2] Run ```./preprocessing_for_correction_feedback.py``` for the preprocessing.
 * [3] Run ```./haiku_for_correction_feedback.py``` to get the correction feedback.
 
-Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use our trained models, please put the them under the ```models``` folder.
-(If using the AOKVQA dataset, change the following paths to the AOKVQA dataset path in the code and bash arguments.)
 
 **After finishing getting feedback, enter the correction file path in the --correction_file.**
 ```
