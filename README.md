@@ -63,15 +63,18 @@ Assume that the images are stored in the ```images``` folder.
 python extract_caption.py
 ```
 
-## Instructions
+## Instructions 
+
+If using the AOKVQA dataset, change the following paths to the AOKVQA dataset and also change the vision features to AOKVQA.
+
 
 ### [Step 1] RL training (4 NVIDIA A100 GPUs with 80GB memory) - RL.sh
 
 ```
-# Base - RL training
+# Base - RL training 
 accelerate launch run_mm_cot_rl.py \
-    --data_root data/ScienceQA/data \
-    --caption_file data/instruct_captions.json \
+    --data_root scienceqa_data/ScienceQA/data \
+    --caption_file scienceqa_data/instruct_captions.json \
     --user_msg rationale --img_type vit \
     --use_caption --use_generate --prompt_format QCM-E \
     --seed 42 \
@@ -87,27 +90,34 @@ accelerate launch run_mm_cot_rl.py \
     --init_kl_coef 0.0001 --top_k 50 \
     --rl_epochs 10 --lr 2e-5 --clip_range 0.2 --epochs 1 --ga_step 8 --gamma 1.0 --adv_normalization True
 
+If there is a message 'Rationale Finished. Waiting for the feedback', Sentence-level nuanced feedback is needed.
+First, copy RL_models/{current_model_path}/questions/* to the ./preprocessing_after_RL path.
+So, run ./preprocessing_after_RL/processing_sentence_level_feedback.sh for preprocessing to get the feedback, 
+and get the sentence-level nuanced feedback by running ./haiku.py.
+After finishing getting feedback, copy the questions folder back to RL_models/{current_model_path}. Then, create a file named llm_done.txt in the path RL_models/{current_model_path}/questions/0/, RL_models/{current_model_path}/questions/1/, RL_models/{current_model_path}/questions/2/, and RL_models/{current_model_path}/questions/3/ (use the command touch RL_models/{current_model_path}/questions/{0,1,2,3}/llm_done.txt).
+
 # Base - Generate predictions_ans_*.json (Use 1 NVIDIA A100 GPU)
 CUDA_VISIBLE_DEVICES=0 python main.py \
-    --data_root data/ScienceQA/data \
+    --data_root scienceqa_data/ScienceQA/data \
     --model "declare-lab/flan-alpaca-base" \
-    --caption_file data/instruct_captions.json \
+    --caption_file scienceqa_data/instruct_captions.json \
     --user_msg rationale --img_type vit \
     --bs 16 --eval_bs 8 --epoch 20 --lr 8e-5 --output_len 512 \
     --use_caption --use_generate --final_eval --prompt_format QCM-E \
     --output_dir experiments \
     --seed 42 \
-    --evaluate_dir /fs/scratch/PAS2138/mm_cot/base_neutral0.5_k4_rlb8_cl0.2_rle10_lr2e-05_vlr1.0_g1.0_l0.95_fGPT4V_seed42_kl0.0001_ga8_dosampleTrue_advTrue_tk50_ref/1
+    --evaluate_dir ./RL_models/base_neutral0.5_k4_rlb8_cl0.2_rle10_lr2e-05_vlr1.0_g1.0_l0.95_fGPT4V_seed42_kl0.0001_ga8_dosampleTrue_advTrue_tk50_ref/0
+
 
 # Large - RL training
 accelerate launch run_mm_cot_rl.py \
-    --data_root data/ScienceQA/data \
-    --caption_file data/instruct_captions.json \
+    --data_root scienceqa_data/ScienceQA/data \
+    --caption_file scienceqa_data/instruct_captions.json \
     --user_msg rationale --img_type vit \
     --use_caption --use_generate --prompt_format QCM-E \
     --seed 42 \
     --model "declare-lab/flan-alpaca-large" \
-    --model_type base \
+    --model_type large \
     --base_model_dir ./models/mm-cot-large-rationale \
     --ref_model ./models/mm-cot-large-rationale \
     --k_actions 4 --train_split train \
@@ -118,50 +128,63 @@ accelerate launch run_mm_cot_rl.py \
     --init_kl_coef 0.0001 --top_k 50 \
     --rl_epochs 5 --lr 2e-5 --clip_range 0.2 --epochs 1 --ga_step 16 --gamma 1.0 --adv_normalization False
 
-# Large - Generate predictions_ans_*.json (Use 4 NVIDIA A100 GPU)
+# Large - Generate predictions_ans_*.json (Use 4 NVIDIA A100 GPUs)
 CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py \
-    --data_root data/ScienceQA/data \
+    --data_root scienceqa_data/ScienceQA/data \
     --model "declare-lab/flan-alpaca-large" \
-    --caption_file data/instruct_captions.json \
+    --caption_file scienceqa_data/instruct_captions.json \
     --user_msg rationale --img_type vit \
     --bs 2 --eval_bs 4 --epoch 50 --lr 5e-5 --output_len 512 \
     --use_caption --use_generate --prompt_format QCM-E \
     --output_dir experiments \
     --seed 42 \
-    --evaluate_dir /fs/scratch/PAS2138/mm_cot/haiku_feedback/large_neutral0.5_k4_rlb2_cl0.2_rle5_lr2e-05_vlr1.0_g1.0_l0.95_fGPT4V_seed42_kl0.0001_ga16_dosampleTrue_advFalse_tk50_ref/1
+    --evaluate_dir ./RL_models/large_neutral0.5_k4_rlb2_cl0.2_rle5_lr2e-05_vlr1.0_g1.0_l0.95_fGPT4V_seed42_kl0.0001_ga16_dosampleTrue_advFalse_tk50_ref/0
     
 ```
 
 ### [Step 2] SFT
+Before the Supervised Fine Tuning step, correction feedback is needed. To obtain this feedback, you need an API key for Claude 3.
+
+Run the following command using Python:
+python ./preprocessing_after_RL/remove_sentence.py --file_path ./RL_models/{current_model}/{action}/prediction_ans_train.json --tokenizer ./RL_models/{current_model}/{action}
+
+Run the preprocessing script:
+./preprocessing_for_correction_feedback.py
+
+Finally, run the script to get the correction feedback:
+haiku_for_correction_feedback.py
 
 Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use our trained models, please put the them under the ```models``` folder.
+(If using the AOKVQA dataset, change the following paths to the AOKVQA dataset path in the code and bash arguments.)
 
 ```
 CUDA_VISIBLE_DEVICES=0 python main.py \
     --data_root data/ScienceQA/data \
-    --correction True --correction_file scienceqa/aokvqa_2e5_e10_t_3.json \
+    --correction True --correction_file scienceqa/correction.json \
     --caption_file data/instruct_captions.json \
-    --model /fs/scratch/PAS2138/mm_cot/base_neutral0.5_k4_rlb8_cl0.2_rle10_lr2e-05_vlr1.0_g1.0_l0.95_fGPT4V_seed42_kl0.0001_ga8_dosampleTrue_advTrue_tk50_ref/2 \
+    --model ./RL_models/base_neutral0.5_k4_rlb8_cl0.2_rle10_lr2e-05_vlr1.0_g1.0_l0.95_fGPT4V_seed42_kl0.0001_ga8_dosampleTrue_advTrue_tk50_ref/0 \
     --user_msg rationale --img_type vit \
     --bs 8 --eval_bs 8 --epoch 20 --lr 8e-5 --output_len 512 \
     --use_caption --use_generate --final_eval --prompt_format QCM-E \
     --output_dir experiments
-
-# answer inference
-CUDA_VISIBLE_DEVICES=0,1,2,3 python main_central.py \
-    --data_root data/ScienceQA/data \
-    --caption_file data/instruct_captions.json \
-    --model declare-lab/flan-alpaca-large \
-    --user_msg answer --img_type vit \
-    --bs 4 --eval_bs 8 --epoch 50 --lr 5e-5 --output_len 64  \
-    --use_caption --use_generate --prompt_format QCMG-A \
-    --output_dir experiments \
-    --eval_le experiments/rationale_declare-lab-flan-alpaca-large_vit_QCM-E_lr5e-05_bs8_op512_ep50/predictions_ans_eval.json \
-    --test_le experiments/rationale_declare-lab-flan-alpaca-large_vit_QCM-E_lr5e-05_bs8_op512_ep50/predictions_ans_test.json \
-    --evaluate_dir models/mm-cot-large-answer
 ```
 
 ### [Step 3] LoRA
+```
+CUDA_VISIBLE_DEVICES=0 python run_mm_cot_lora.py \
+    --correction False \
+    --data_root data/ScienceQA/data \
+    --caption_file data/instruct_captions.json \
+    --model {correction_trained_model_path under experiments} \
+    --user_msg answer --img_type vit \
+    --bs 16 --eval_bs 8 --epoch 20 --lr 8e-5 --output_len 64 \
+    --use_caption --use_generate --final_eval --prompt_format QCM-A \
+    --seed 42 \
+    --eval_le {correction_trained_model_path under experiments}/predictions_ans_eval.json \
+    --test_le {correction_trained_model_path under experiments}/predictions_ans_test.json \
+    --lora_r 64 --lora_alpha 128 --lora_dropout 0.05 \
+```
+See the results in {correction_trained_model_path under experiments}/{lora_trained_path}/prediction_ans_test.json.
 
 ## Citing ARES
 
