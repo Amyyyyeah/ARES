@@ -70,7 +70,7 @@ Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use o
 (If using the AOKVQA dataset, change the following paths to the AOKVQA dataset path in the code and bash arguments.)
 
 
-## Our ARES Training Steps
+### Our ARES Training Steps
 ### [Step 1] RL training (4 NVIDIA A100 GPUs with 80GB memory)
 
 ```
