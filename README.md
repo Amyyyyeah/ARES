@@ -69,7 +69,7 @@ python extract_caption.py
 Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use our trained models for testing, please place them under the models folder.
 (If using the AOKVQA dataset, change the following paths to the AOKVQA dataset path in the code and bash arguments.)
 
-_Before following the steps, you need to obtain the Claude 3 Haiku API._
+_Before following the steps, you need to obtain the Claude 3 Haiku API keys._
 
 ### Our ARES Training Steps
 ### [Step 1] RL training 
@@ -151,15 +151,15 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py \
 ```
 
 ### [Step 2] SFT
-* Correction feedback is required from a Teacher. For the paper report, we use Haiku Claude 3 before the SFT step. 
+* We request correction feedback from advanced AI (Teacher) for sentences containing errors after the RL process. To get correction feedback from Haiku of Claude 3, you need to follow the three steps below first and then train using Supervised Fine-Tuning with the correction file.
 
-* [1] Run the following command using Python:
+** Getting Correction Feedback **
+  - [1] Run the following command using Python:
 ```
 python ./preprocessing_after_RL/remove_sentence.py --file_path ./RL_models/{current_model}/{action}/prediction_ans_train.json --tokenizer ./RL_models/{current_model}/{action}
 ```
-
-* [2] Run ```./preprocessing_for_correction_feedback.py``` for the preprocessing.
-* [3] Run ```./haiku_for_correction_feedback.py``` to get the correction feedback.
+  - [2] Run ```./preprocessing_for_correction_feedback.py``` for the preprocessing.
+  - [3] Run ```./haiku_for_correction_feedback.py``` to get the correction feedback.
 
 
 **After finishing getting feedback, enter the correction file path in the --correction_file.**
