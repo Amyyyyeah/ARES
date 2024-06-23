@@ -71,7 +71,7 @@ Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use o
 
 _Before following the steps, you need to obtain the Claude 3 Haiku API keys._
 
-### Our ARES Training Steps
+### # Our ARES Training Steps
 ### [Step 1] Reinforcement Learning (RL)
 * We use 4 NVIDIA A100 GPUs with 80GB memory for RL training.
 ```
@@ -153,7 +153,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py \
 ### [Step 2] Supervised Fine-Tuning (SFT)
 * We request correction feedback from advanced AI (Teacher) for sentences containing errors after the RL process. To get correction feedback from Haiku of Claude 3, you need to follow the three steps below first and then train using SFT with the correction file.
 
-**Getting Correction Feedback**
+**# Getting Correction Feedback**
 
 [1] Run the following command using Python:
 ```
@@ -165,7 +165,7 @@ python ./preprocessing_after_RL/remove_sentence.py --file_path ./RL_models/{curr
 [3] Run ```./haiku_for_correction_feedback.py``` to get the correction feedback.
 
 
-**After finishing getting feedback, enter the correction file path in the --correction_file.**
+**# After finishing getting feedback, enter the correction file path in the --correction_file.**
 ```
 CUDA_VISIBLE_DEVICES=0 python main.py \
     --data_root data/ScienceQA/data \
