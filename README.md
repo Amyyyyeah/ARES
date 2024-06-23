@@ -147,7 +147,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py \
 ```
 
 ### [Step 2] SFT
-* Before the Supervised Fine Tuning step, correction feedback is needed. To obtain this feedback, you need an API key for Claude 3.
+* Correction feedback is required from a Teacher. For the paper report, we use Haiku Claude 3 before the SFT step.
 
 * [1] Run the following command using Python:
 ```
