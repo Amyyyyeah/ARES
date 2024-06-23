@@ -69,7 +69,7 @@ python extract_caption.py
 Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use our trained models for testing, please place them under the models folder.
 (If using the A-OKVQA dataset, change the following paths to the A-OKVQA dataset path in the code and bash arguments.)
 
-✔️ Before proceeding with RL and SFT, the corresponding feedback (highlighted below) from a Teacher is required. In our work, we use Claude 3 Haiku, but you can use another model to get the feedback.
+✔️ Before proceeding with RL and SFT, the corresponding feedback (<mark>highlighted below</mark>) from a Teacher is required. In our work, we use Claude 3 Haiku, but you can use another model to get the feedback.
 
 ### # Our ARES Training Steps:
 ### [Step 1] Reinforcement Learning (RL)
