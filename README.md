@@ -154,11 +154,14 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py \
 * We request correction feedback from advanced AI (Teacher) for sentences containing errors after the RL process. To get correction feedback from Haiku of Claude 3, you need to follow the three steps below first and then train using SFT with the correction file.
 
 **Getting Correction Feedback**
+
 [1] Run the following command using Python:
 ```
 python ./preprocessing_after_RL/remove_sentence.py --file_path ./RL_models/{current_model}/{action}/prediction_ans_train.json --tokenizer ./RL_models/{current_model}/{action}
 ```
+
 [2] Run ```./preprocessing_for_correction_feedback.py``` for the preprocessing.
+
 [3] Run ```./haiku_for_correction_feedback.py``` to get the correction feedback.
 
 
