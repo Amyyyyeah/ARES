@@ -64,10 +64,15 @@ python extract_caption.py
 ```
 
 ## Instructions 
+Our ARES Training consists of the following three steps: RL, SFT, and LoRA.
 
-Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use our trained models, please put the them under the ```models``` folder.
+Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use our trained models for testing, please place them under the models folder.
+
 (If using the AOKVQA dataset, change the following paths to the AOKVQA dataset path in the code and bash arguments.)
 
+If you encounter any issues during these steps, please refer to our troubleshooting guide or contact support.
+
+## Our ARES Training Steps
 ### [Step 1] RL training (4 NVIDIA A100 GPUs with 80GB memory)
 
 ```
