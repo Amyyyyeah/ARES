@@ -71,7 +71,7 @@ Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use o
 
 ✔️ Before following the steps, you need to obtain the Claude 3 Haiku API keys.
 
-### # Our ARES Training Steps
+### # Our ARES Training Steps:
 ### [Step 1] Reinforcement Learning (RL)
 * We use 4 NVIDIA A100 GPUs with 80GB memory for RL training.
 ```
