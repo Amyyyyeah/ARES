@@ -72,7 +72,7 @@ Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use o
 _Before following the steps, you need to obtain the Claude 3 Haiku API keys._
 
 ### Our ARES Training Steps
-### [Step 1] RL training 
+### [Step 1] Reinforcement Learning (RL)
 * We use 4 NVIDIA A100 GPUs with 80GB memory for RL training.
 ```
 # Base - RL training
@@ -150,16 +150,16 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py \
     --evaluate_dir ./RL_models/large_neutral0.5_k4_rlb2_cl0.2_rle5_lr2e-05_vlr1.0_g1.0_l0.95_fGPT4V_seed42_kl0.0001_ga16_dosampleTrue_advFalse_tk50_ref/0
 ```
 
-### [Step 2] SFT
-* We request correction feedback from advanced AI (Teacher) for sentences containing errors after the RL process. To get correction feedback from Haiku of Claude 3, you need to follow the three steps below first and then train using Supervised Fine-Tuning with the correction file.
+### [Step 2] Supervised Fine-Tuning (SFT)
+* We request correction feedback from advanced AI (Teacher) for sentences containing errors after the RL process. To get correction feedback from Haiku of Claude 3, you need to follow the three steps below first and then train using SFT with the correction file.
 
 **Getting Correction Feedback**
-  - [1] Run the following command using Python:
+[1] Run the following command using Python:
 ```
 python ./preprocessing_after_RL/remove_sentence.py --file_path ./RL_models/{current_model}/{action}/prediction_ans_train.json --tokenizer ./RL_models/{current_model}/{action}
 ```
-  - [2] Run ```./preprocessing_for_correction_feedback.py``` for the preprocessing.
-  - [3] Run ```./haiku_for_correction_feedback.py``` to get the correction feedback.
+[2] Run ```./preprocessing_for_correction_feedback.py``` for the preprocessing.
+[3] Run ```./haiku_for_correction_feedback.py``` to get the correction feedback.
 
 
 **After finishing getting feedback, enter the correction file path in the --correction_file.**
@@ -175,7 +175,7 @@ CUDA_VISIBLE_DEVICES=0 python main.py \
     --output_dir experiments
 ```
 
-### [Step 3] LoRA
+### [Step 3] LoRA adapter
 ```
 CUDA_VISIBLE_DEVICES=0 python run_mm_cot_lora.py \
     --correction False \
