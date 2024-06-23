@@ -69,7 +69,7 @@ python extract_caption.py
 Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use our trained models for testing, please place them under the models folder.
 (If using the A-OKVQA dataset, change the following paths to the A-OKVQA dataset path in the code and bash arguments.)
 
-✔️ Before following the steps, you need to obtain the Claude 3 Haiku API keys.
+✔️ Before proceeding with RL and SFT, the corresponding feedback (highlighted below) from a Teacher is required. In our work, we use Claude 3 Haiku, but you can use another model to get the feedback.
 
 ### # Our ARES Training Steps:
 ### [Step 1] Reinforcement Learning (RL)
@@ -95,7 +95,7 @@ accelerate launch run_mm_cot_rl.py \
     --rl_epochs 10 --lr 2e-5 --clip_range 0.2 --epochs 1 --ga_step 8 --gamma 1.0 --adv_normalization True
 ```
 
-* If there is a message 'Rationale Finished. Waiting for the feedback', Sentence-level nuanced feedback is needed.
+* If there is a message 'Rationale Finished. Waiting for the feedback', <mark>Sentence-level nuanced feedback</mark> is needed.
     - First, copy ```./RL_models/{current_model_path}/questions/*``` to the ```./preprocessing_after_RL``` path.
     - So, run ```./preprocessing_after_RL/processing_sentence_level_feedback.sh``` for preprocessing to get the feedback, and get the sentence-level nuanced feedback by running ```./haiku.py```.
     - After finishing getting feedback, copy the questions folder back to ```./RL_models/{current_model_path}```.
