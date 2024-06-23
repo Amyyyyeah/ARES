@@ -69,6 +69,7 @@ python extract_caption.py
 Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use our trained models for testing, please place them under the models folder.
 (If using the AOKVQA dataset, change the following paths to the AOKVQA dataset path in the code and bash arguments.)
 
+_Before following the steps, you need to obtain the Claude 3 Haiku API._
 
 ### Our ARES Training Steps
 ### [Step 1] RL training 
@@ -150,7 +151,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py \
 ```
 
 ### [Step 2] SFT
-* Correction feedback is required from a Teacher. For the paper report, we use Haiku Claude 3 before the SFT step.
+* Correction feedback is required from a Teacher. For the paper report, we use Haiku Claude 3 before the SFT step. 
 
 * [1] Run the following command using Python:
 ```
