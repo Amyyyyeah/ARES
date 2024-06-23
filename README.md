@@ -67,7 +67,7 @@ python extract_caption.py
 **Our ARES Training consists of the following three steps: RL, SFT, and LoRA.**
 
 Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use our trained models for testing, please place them under the models folder.
-(If using the AOKVQA dataset, change the following paths to the AOKVQA dataset path in the code and bash arguments.)
+(If using the A-OKVQA dataset, change the following paths to the A-OKVQA dataset path in the code and bash arguments.)
 
 _Before following the steps, you need to obtain the Claude 3 Haiku API keys._
 
@@ -162,7 +162,7 @@ python ./preprocessing_after_RL/remove_sentence.py --file_path ./RL_models/{curr
 
 [2] Run ```./preprocessing_for_correction_feedback.py``` for the preprocessing.
 
-[3] Run ```./haiku_for_correction_feedback.py``` to get the correction feedback.
+[3] Run ```./haiku_for_correction_feedback.py``` to get the correction feedback and save the correction file.
 
     
 
