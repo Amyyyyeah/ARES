@@ -71,8 +71,8 @@ Our trained models are available at https://huggingface.co/JCAC/ARES/~. To use o
 
 
 ### Our ARES Training Steps
-### [Step 1] RL training (4 NVIDIA A100 GPUs with 80GB memory)
-
+### [Step 1] RL training 
+* We use 4 NVIDIA A100 GPUs with 80GB memory for RL training.
 ```
 # Base - RL training
 accelerate launch run_mm_cot_rl.py \
